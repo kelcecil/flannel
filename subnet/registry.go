@@ -22,6 +22,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/coreos/flannel/Godeps/_workspace/src/github.com/coreos/etcd/client"
 	"github.com/coreos/flannel/Godeps/_workspace/src/github.com/coreos/go-etcd/etcd"
 	log "github.com/coreos/flannel/Godeps/_workspace/src/github.com/golang/glog"
 	"github.com/coreos/flannel/Godeps/_workspace/src/golang.org/x/net/context"
@@ -52,6 +53,10 @@ type etcdSubnetRegistry struct {
 
 func init() {
 	etcd.SetLogger(golog.New(os.Stderr, "go-etcd", golog.LstdFlags))
+}
+
+func etcdClient(c client.Config) (client.Client, error) {
+	return client.New(c)
 }
 
 func newEtcdClient(c *EtcdConfig) (*etcd.Client, error) {
